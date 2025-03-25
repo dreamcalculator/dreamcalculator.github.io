@@ -366,7 +366,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 
   <p class="hint" style="margin-left:20px;">
-    물가 상승에 맞춰, 저축 금액도 같은 비율로 매년 상승한다고 가정합니다
+    (물가 상승에 맞춰 저축 금액도 같은 비율로 매년 상승한다고 가정)
   </p>
 
   <div id="retirementAssetContainer" class="result" style="transition: background-color 0.4s;">
@@ -576,7 +576,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             y: {
               ticks: {
                 callback: function(value) {
-                  return value.toLocaleString() + '원';
+                // (1) 원 → 억 변환
+                const eok = value / 100000000; // 1억=1e8
+                // (2) 소수점 둘째 자리까지 표시
+                return eok.toLocaleString(undefined, { 
+                  maximumFractionDigits: 2 
+                }) + '억원';
                 }
               }
             }
