@@ -524,10 +524,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     let comparisonChart = null;
 
     function drawComparisonChart(A, B) {
-      // (A) 만원 단위로 축소
-      const dataA = A / 100000000;
-      const dataB = B / 100000000;  
-
       // 캔버스 컨텍스트
       const ctx = document.getElementById('comparisonChart').getContext('2d');
 
@@ -540,11 +536,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       comparisonChart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ['필요한 돈 (A)', '은퇴 후 자산 (B)'],
+          labels: ['필요한 돈', '은퇴 후 자산'],
           datasets: [{
-            label: '금액(억원)',
             data: [A, B],
-            backgroundColor: ['#FF9999', '#9999FF'] // 막대 색상
+            backgroundColor: ['#FF9999', '#2196F3'] // 막대 색상
           }]
         },
         options: {
@@ -815,6 +810,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       container.style.backgroundColor = bgColor;
       msgDiv.innerHTML = msg;
+
+      drawComparisonChart(dreamMoney, retirementAsset);
     }
 
     // (J) 이벤트 리스너
@@ -928,22 +925,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     updateTipsText(); // 내용은 제거됨
     syncFirstSectionToOthers();
     syncFutureValueInputs();
-
-
-    function compareDreamAndRetirement() {
-    // (기존 코드) A와 B 계산
-    let c31Detail = document.getElementById('C31Detail').textContent || "";
-    let dreamMoney = parseInt(c31Detail.replace(/[^0-9]/g, "")) || 0; // 필요한 돈(A)
-
-    let retDetail = document.getElementById('resultValueDetail').textContent || "";
-    let retirementAsset = parseInt(retDetail.replace(/[^0-9]/g, "")) || 0; // 은퇴 후 자산(B)
-
-    // (기존 코드) UI 메시지 배경색 등 설정
-    // ...
-
-    // (새로 추가) 차트 그리기
-    drawComparisonChart(dreamMoney, retirementAsset);
-  }
 
   </script>
 </body>
