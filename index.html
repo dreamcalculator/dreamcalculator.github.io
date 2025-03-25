@@ -156,6 +156,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
 
   </style>
+
+
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -246,7 +248,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
        (1) 원하는 월 생활비 → 미래에 필요한 목돈
       ========================= -->
   <p>
-    현재의 물가로, 얼마의 월 생활비를 원하시나요? 필요한 목돈을 계산해드립니다.
+    현재의 물가로, 꿈꾸는 미래에 얼마의 월 생활비를 원하시나요?
   </p>
   <h2>원하는 월 생활비 → 미래에 필요한 목돈</h2>
 
@@ -369,6 +371,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <button id="copyResultBtn" class="material-btn blue-btn">결과 복사하기</button>
   </div>
   <div id="retirementAssetMsg" style="margin-top:5px; font-weight:normal;"></div>
+
+  <!-- 그래프가 들어갈 캔버스 -->
+  <canvas id="comparisonChart" width="400" height="200"
+    style="max-width: 100%; margin-top: 20px;">
+  </canvas>
 
   <div class="divider"></div>
 
@@ -509,7 +516,48 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 
   <!-- ===== JS: DOM 아래에 배치 ===== -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
+    // 그래프 객체 전역 변수로 저장 (업데이트 시 재사용)
+    let comparisonChart = null;
+
+    function drawComparisonChart(A, B) {
+      // 캔버스 컨텍스트
+      const ctx = document.getElementById('comparisonChart').getContext('2d');
+
+      // 만약 이전에 생성된 차트가 있다면, 파괴 후 다시 그리기
+      if (comparisonChart) {
+        comparisonChart.destroy();
+      }
+
+      // Chart.js로 막대 그래프 생성
+      comparisonChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['필요한 돈 (A)', '은퇴 후 자산 (B)'],
+          datasets: [{
+            label: '금액(원)',
+            data: [A, B],
+            backgroundColor: ['#FF9999', '#9999FF'] // 막대 색상
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              ticks: {
+                // 숫자를 보기 좋게 3자리마다 콤마, 단위 변환 등 가능
+                callback: function(value) {
+                  return value.toLocaleString() + '원';
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
     /* (A) 열기/접기 버튼 JS */
     document.addEventListener("DOMContentLoaded", () => {
       const toggleBtn = document.getElementById("toggleUsageBtn");
@@ -874,6 +922,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     updateTipsText(); // 내용은 제거됨
     syncFirstSectionToOthers();
     syncFutureValueInputs();
+
+
+    function compareDreamAndRetirement() {
+    // (기존 코드) A와 B 계산
+    let c31Detail = document.getElementById('C31Detail').textContent || "";
+    let dreamMoney = parseInt(c31Detail.replace(/[^0-9]/g, "")) || 0; // 필요한 돈(A)
+
+    let retDetail = document.getElementById('resultValueDetail').textContent || "";
+    let retirementAsset = parseInt(retDetail.replace(/[^0-9]/g, "")) || 0; // 은퇴 후 자산(B)
+
+    // (기존 코드) UI 메시지 배경색 등 설정
+    // ...
+
+    // (새로 추가) 차트 그리기
+    drawComparisonChart(dreamMoney, retirementAsset);
+  }
+
   </script>
 </body>
 </html>
