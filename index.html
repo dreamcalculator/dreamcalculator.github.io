@@ -47,12 +47,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       margin-bottom: 15px;
       display: flex;
       align-items: center;
+      position: relative; /* 가상 요소의 위치 기준이 될 부모 */
     }
+
     .form-group label {
       width: 120px; /* 모든 라벨 폭을 동일하게 */
     }
+
     .form-group input {
-      position: relative;      /* ::after 절대위치 기준 */
       border: none;
       border-radius: 0;
       background-color: transparent;
@@ -64,27 +66,28 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       outline: none;
     }
 
-    .form-group input::after {
+    /* 부모 요소에 가상 요소를 추가 */
+    .form-group::after {
       content: "";
       position: absolute;
       left: 50%;
       bottom: 0;
       width: 0;                     /* 처음엔 폭=0 */
       height: 2px;
-      background-color: #2196F3;    /* 파란 밑줄 */
-      transform: translateX(-50%);  /* 중앙 정렬 */
-      transition: width 0.4s ease;  /* 폭이 부드럽게 변화 */
+      background-color: #2196F3;    /* 포커스 시 나타날 파란 밑줄 */
+      transform: translateX(-50%);
+      transition: width 0.4s ease;  /* 부드러운 애니메이션 효과 */
     }
 
-    /* 포커스되면 (클릭 후 입력 중일 때) 밑줄 폭이 100%가 되어
-      중앙에서 좌우로 퍼지는 애니메이션이 나타난다 */
-    .form-group input:focus::after {
+    /* .form-group 내부의 요소가 포커스되면 가상 요소 폭이 100%가 됨 */
+    .form-group:focus-within::after {
       width: 100%;
     }
 
     .form-group span {
       margin-left: 5px;
     }
+
     .hint {
       color: #666;
       margin-left: 10px;
