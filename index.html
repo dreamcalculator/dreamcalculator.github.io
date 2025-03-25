@@ -82,8 +82,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       마우스를 올려놓으면(:hover) 폭이 100%가 되어
       가운데에서 좌우로 퍼져 나가는 효과가 나타난다
     */
-    .form-group input:hover::after,
-    .form-group input:focus::after {
+    .form-group:hover input::after,
+    .form-group:focus-within input::after {
       width: 100%;
     }
 
@@ -138,6 +138,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .naver-btn {
       background-color: #00C73C; /* 네이버 블로그 색상 */
     }
+    /* 크롬, 사파리, 엣지, 오페라에서 스피너 버튼 제거 */
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* 파이어폭스에서 스피너 버튼 제거 */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
   </style>
 </head>
 <body>
