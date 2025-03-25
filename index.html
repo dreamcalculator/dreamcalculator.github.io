@@ -523,32 +523,43 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     // 그래프 객체 전역 변수로 저장 (업데이트 시 재사용)
     let comparisonChart = null;
 
-    function drawComparisonChart(A, B) {
-      // 캔버스 컨텍스트
-      const ctx = document.getElementById('comparisonChart').getContext('2d');
+    function drawComparisonChart(A, B, isShortage) {
+      // isShortage가 true면 "돈 부족", false면 "남음"
+      // (또는 diff값을 여기서 직접 받아서 판단해도 됨)
 
-      // 만약 이전에 생성된 차트가 있다면, 파괴 후 다시 그리기
+      const ctx = document.getElementById('comparisonChart').getContext('2d');
       if (comparisonChart) {
         comparisonChart.destroy();
       }
 
-      // Chart.js로 막대 그래프 생성
+      // (1) '필요한 돈'은 일정 색으로 고정
+      let colorA = "#FFFECE"; 
+
+      // (2) '은퇴 후 자산' 막대 색은 남으면 초록, 부족하면 빨강
+      let colorB = isShortage ? "#ff6666" : "#66cc66"; 
+      // 원하는 색상 코드로 바꿔도 OK (예: "#ffcccc", "#ccffcc" 등)
+
       comparisonChart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ['필요한 돈', '은퇴 후 자산'],
+          labels: ['필요한 돈 (A)', '은퇴 후 자산 (B)'],
           datasets: [{
+            label: "", // 범례 숨김 + label:"" => undefined 표시 안 뜸
             data: [A, B],
-            backgroundColor: ['#FF9999', '#2196F3'] // 막대 색상
+            backgroundColor: [colorA, colorB]
           }]
         },
         options: {
           responsive: true,
-          maintainAspectRatio: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false  // 범례 안 보이게
+            }
+          },
           scales: {
             y: {
               ticks: {
-                // 숫자를 보기 좋게 3자리마다 콤마, 단위 변환 등 가능
                 callback: function(value) {
                   return value.toLocaleString() + '원';
                 }
@@ -558,6 +569,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         }
       });
     }
+
 
     /* (A) 열기/접기 버튼 JS */
     document.addEventListener("DOMContentLoaded", () => {
@@ -784,6 +796,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       }
 
       let diff = retirementAsset - dreamMoney;
+      let isShortage = (diff < 0);
       let absDiff = Math.abs(diff);
       let ratio = diff / dreamMoney;
 
@@ -811,7 +824,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       container.style.backgroundColor = bgColor;
       msgDiv.innerHTML = msg;
 
-      drawComparisonChart(dreamMoney, retirementAsset);
+      drawComparisonChart(dreamMoney, retirementAsset, isShortage);
     }
 
     // (J) 이벤트 리스너
