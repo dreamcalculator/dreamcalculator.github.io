@@ -373,9 +373,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div id="retirementAssetMsg" style="margin-top:5px; font-weight:normal;"></div>
 
   <!-- 그래프가 들어갈 캔버스 -->
-  <canvas id="comparisonChart" width="400" height="200"
-    style="max-width: 100%; margin-top: 20px;">
-  </canvas>
+  <div style="width: 600px; max-width: 100%; margin: 0 auto;">
+    <canvas id="comparisonChart" width="400" height="200"
+      style="width:400px; height:200px; max-width:100%; margin-top:20px;">
+    </canvas>
+  </div>
 
   <div class="divider"></div>
 
@@ -522,6 +524,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     let comparisonChart = null;
 
     function drawComparisonChart(A, B) {
+      // (A) 만원 단위로 축소
+      const dataA = A / 100000000;
+      const dataB = B / 100000000;  
+
       // 캔버스 컨텍스트
       const ctx = document.getElementById('comparisonChart').getContext('2d');
 
@@ -536,14 +542,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         data: {
           labels: ['필요한 돈 (A)', '은퇴 후 자산 (B)'],
           datasets: [{
-            label: '금액(원)',
+            label: '금액(억원)',
             data: [A, B],
             backgroundColor: ['#FF9999', '#9999FF'] // 막대 색상
           }]
         },
         options: {
           responsive: true,
-          maintainAspectRatio: false,
+          maintainAspectRatio: true,
           scales: {
             y: {
               ticks: {
