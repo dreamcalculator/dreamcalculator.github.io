@@ -47,43 +47,49 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       margin-bottom: 15px;
       display: flex;
       align-items: center;
-      position: relative; /* 가상 요소의 위치 기준이 될 부모 */
     }
 
+    /* 새로 만든 .input-wrap 컨테이너 */
+    .input-wrap {
+      position: relative;  /* 가상 요소 기준이 될 박스 */
+      width: 150px;        /* input 폭과 동일하게 (또는 원하는 크기) */
+    }
+
+    /* label, span 스타일은 그대로 두시면 됩니다 */
     .form-group label {
-      width: 120px; /* 모든 라벨 폭을 동일하게 */
+      width: 120px;
     }
 
-    .form-group input {
+    /* input 스타일은 "border-bottom"만 유지 */
+    .input-wrap input {
       border: none;
       border-radius: 0;
       background-color: transparent;
-      border-bottom: 2px solid #ccc; /* 기본: 흐린 회색 밑줄 */
-      width: 150px;
+      border-bottom: 2px solid #ccc;  /* 기본 회색 밑줄 */
+      width: 100%;                    /* 래퍼와 같은 폭으로 */
       padding: 5px;
       text-align: right;
       font-size: 16px;
       outline: none;
     }
 
-    /* 부모 요소에 가상 요소를 추가 */
-    .form-group::after {
+    /* 파란 밑줄은 .input-wrap::after 로 만든다 */
+    .input-wrap::after {
       content: "";
       position: absolute;
       left: 50%;
       bottom: 0;
-      width: 0;                     /* 처음엔 폭=0 */
+      width: 0;                        /* 처음엔 0 */
       height: 2px;
-      background-color: #2196F3;    /* 포커스 시 나타날 파란 밑줄 */
-      transform: translateX(-50%);
-      transition: width 0.4s ease;  /* 부드러운 애니메이션 효과 */
+      background-color: #2196F3;       /* 파란색 */
+      transform: translateX(-50%);     
+      transition: width 0.4s ease;     /* 중앙에서 좌우로 퍼지는 애니메이션 */
     }
 
-    /* .form-group 내부의 요소가 포커스되면 가상 요소 폭이 100%가 됨 */
-    .form-group:focus-within::after {
+    /* 포커스되면(.input-wrap 내부에 focus가 생기면) 폭이 100%로 */
+    .input-wrap:focus-within::after {
       width: 100%;
     }
-
     .form-group span {
       margin-left: 5px;
     }
@@ -246,23 +252,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div class="form-group">
     <label for="C26">목표 월 생활비</label>
-    <input type="text" id="C26" placeholder="예: 4,500,000" />
+    <div class="input-wrap">
+      <input type="text" id="C26" placeholder="예: 4,500,000" />
+    </div>
     <span>원</span>
     <span id="C26_million" class="hint">(0원)</span>
   </div>
+  
   <div class="form-group">
     <label for="C27">인출율</label>
-    <input type="number" id="C27" placeholder="예: 3.5" step="0.1" />
+    <div class="input-wrap">
+      <input type="number" id="C27" placeholder="예: 3.5" step="0.1" />
+    </div>
     <span>%</span>
   </div>
+  
   <div class="form-group">
     <label for="C28">연수</label>
-    <input type="number" id="C28" placeholder="예: 20" />
+    <div class="input-wrap">
+      <input type="number" id="C28" placeholder="예: 20" />
+    </div>
     <span>년</span>
   </div>
+  
   <div class="form-group">
     <label for="C29">인플레이션</label>
-    <input type="number" id="C29" placeholder="예: 3" step="0.1" />
+    <div class="input-wrap">
+      <input type="number" id="C29" placeholder="예: 3" step="0.1" />
+    </div>
     <span>%</span>
   </div>
 
@@ -299,33 +316,48 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div class="form-group">
     <label for="B36">보유 자산</label>
-    <input type="text" id="B36" placeholder="예: 100,000,000" />
+    <div class="input-wrap">
+      <input type="text" id="B36" placeholder="예: 100,000,000" />
+    </div>
     <span>원</span>
     <span id="B36_million" class="hint">(0원)</span>
   </div>
+  
   <div class="form-group">
     <label for="B37">
-    <span style="color:red; font-weight:bold;">연간</span> 저축 금액
+      <span style="color:red; font-weight:bold;">연간</span> 저축 금액
     </label>
-    <input type="text" id="B37" placeholder="예: 12,000,000" />
+    <div class="input-wrap">
+      <input type="text" id="B37" placeholder="예: 12,000,000" />
+    </div>
     <span>원</span>
     <span id="B37_million" class="hint">(0원)</span>
   </div>
+  
   <div class="form-group">
     <label for="B38">기간</label>
-    <input type="number" id="B38" placeholder="예: 25" />
+    <div class="input-wrap">
+      <input type="number" id="B38" placeholder="예: 25" />
+    </div>
     <span>년</span>
   </div>
+  
   <div class="form-group">
     <label for="B39">명목 수익률<br>(투자 수익률)</label>
-    <input type="number" id="B39" placeholder="예: 10" step="0.1" />
+    <div class="input-wrap">
+      <input type="number" id="B39" placeholder="예: 10" step="0.1" />
+    </div>
     <span>%</span>
   </div>
+  
   <div class="form-group">
     <label for="B40">저축 증가율<br>(물가 상승률)</label>
-    <input type="number" id="B40" placeholder="예: 3" step="0.1" />
+    <div class="input-wrap">
+      <input type="number" id="B40" placeholder="예: 3" step="0.1" />
+    </div>
     <span>%</span>
   </div>
+
   <p class="hint" style="margin-left:20px;">
     물가 상승에 맞춰, 저축 금액도 같은 비율로 매년 상승한다고 가정합니다
   </p>
@@ -352,18 +384,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div class="form-group">
     <label for="B9">미래 가치</label>
-    <input type="text" id="B9" placeholder="0" />
+    <div class="input-wrap">
+      <input type="text" id="B9" placeholder="0" />
+    </div>
     <span>원</span>
     <span id="B9_million" class="hint">(0원)</span>
   </div>
+  
   <div class="form-group">
     <label for="B10">인플레이션</label>
-    <input type="number" id="B10" placeholder="예: 3" step="0.1" />
+    <div class="input-wrap">
+      <input type="number" id="B10" placeholder="예: 3" step="0.1" />
+    </div>
     <span>%</span>
   </div>
+  
   <div class="form-group">
     <label for="B11">연수</label>
-    <input type="number" id="B11" placeholder="예: 25" />
+    <div class="input-wrap">
+      <input type="number" id="B11" placeholder="예: 25" />
+    </div>
     <span>년</span>
   </div>
 
@@ -385,23 +425,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div class="form-group">
     <label for="B16">미래 목돈</label>
-    <input type="text" id="B16" placeholder="0" />
+    <div class="input-wrap">
+      <input type="text" id="B16" placeholder="0" />
+    </div>
     <span>원</span>
     <span id="B16_million" class="hint">(0원)</span>
   </div>
+  
   <div class="form-group">
     <label for="B17">인출율</label>
-    <input type="number" id="B17" value="3.5" step="0.1" />
+    <div class="input-wrap">
+      <input type="number" id="B17" value="3.5" step="0.1" />
+    </div>
     <span>%</span>
   </div>
+  
   <div class="form-group">
     <label for="B18">인플레이션</label>
-    <input type="number" id="B18" placeholder="예: 3" step="0.1" />
+    <div class="input-wrap">
+      <input type="number" id="B18" placeholder="예: 3" step="0.1" />
+    </div>
     <span>%</span>
   </div>
+  
   <div class="form-group">
     <label for="B19">연수</label>
-    <input type="number" id="B19" placeholder="예: 25" />
+    <div class="input-wrap">
+      <input type="number" id="B19" placeholder="예: 25" />
+    </div>
     <span>년</span>
   </div>
 
@@ -428,18 +479,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div class="form-group">
     <label for="FV_B2">현재 가치</label>
-    <input type="text" id="FV_B2" placeholder="예: 400,000,000" />
+    <div class="input-wrap">
+      <input type="text" id="FV_B2" placeholder="예: 400,000,000" />
+    </div>
     <span>원</span>
     <span id="FV_B2_million" class="hint">(0원)</span>
   </div>
+  
   <div class="form-group">
     <label for="FV_B3">인플레이션</label>
-    <input type="number" id="FV_B3" placeholder="예: 3" step="0.1" />
+    <div class="input-wrap">
+      <input type="number" id="FV_B3" placeholder="예: 3" step="0.1" />
+    </div>
     <span>%</span>
   </div>
+  
   <div class="form-group">
     <label for="FV_B4">연수</label>
-    <input type="number" id="FV_B4" placeholder="예: 25" />
+    <div class="input-wrap">
+      <input type="number" id="FV_B4" placeholder="예: 25" />
+    </div>
     <span>년</span>
   </div>
 
