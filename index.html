@@ -52,6 +52,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
     h2 {
       margin-bottom: 10px;
+      text-align: center;
     }
     .form-group {
       margin-bottom: 15px;
@@ -173,7 +174,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
        (0) "꿈 계산기" 제목
       ========================= -->
   <h1>꿈 계산기</h1>
-  <br><br>
+  <br><h2>by 데굴데굴 돈 굴리기</h2><br>
 
   <!-- =========================
        (버튼 2개를 중앙 정렬 + 간격 추가)
@@ -561,6 +562,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               display: false  // 범례 안 보이게
             }
           },
+          tooltip: {
+            callbacks: {
+              // label 콜백: 마우스가 막대 위에 올라갔을 때 표시되는 텍스트를 정의
+              label: function(context) {
+                // context.parsed.y가 실제 값(예: 2786571619)
+                const value = context.parsed.y || 0;
+                return value.toLocaleString() + "원";
+              }
+            }
+          },        
           scales: {
             y: {
               ticks: {
