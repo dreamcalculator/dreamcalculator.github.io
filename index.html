@@ -560,8 +560,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           plugins: {
             legend: {
               display: false  // 범례 안 보이게
-            }
-          },
+            },
           tooltip: {
             callbacks: {
               // label 콜백: 마우스가 막대 위에 올라갔을 때 표시되는 텍스트를 정의
@@ -571,7 +570,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 return value.toLocaleString() + "원";
               }
             }
-          },        
+          }
+        },        
           scales: {
             y: {
               ticks: {
