@@ -527,7 +527,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       }
 
       // (1) '필요한 돈'은 일정 색으로 고정
-      let colorA = "#FFFECE"; 
+      let colorA = "#FBE4D6"; 
 
       // (2) '은퇴 후 자산' 막대 색은 남으면 초록, 부족하면 빨강
       let colorB = isShortage ? "#ff6666" : "#66cc66"; 
@@ -536,7 +536,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       comparisonChart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ['필요한 돈 (A)', '은퇴 후 자산 (B)'],
+          labels: ['필요한 돈', '은퇴 후 자산'],
           datasets: [{
             label: "", // 범례 숨김 + label:"" => undefined 표시 안 뜸
             data: [A, B],
