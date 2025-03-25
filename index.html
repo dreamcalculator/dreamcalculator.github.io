@@ -49,46 +49,46 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       align-items: center;
     }
 
-    /* 새로 만든 .input-wrap 컨테이너 */
+    /* (A) .input-wrap : 회색 밑줄 + 가상 요소(파란 밑줄)를 모두 담당 */
     .input-wrap {
-      position: relative;  /* 가상 요소 기준이 될 박스 */
-      width: 150px;        /* input 폭과 동일하게 (또는 원하는 크기) */
+      position: relative;             /* 가상 요소 기준점 */
+      border-bottom: 2px solid #ccc;  /* 기본 회색 밑줄을 래퍼에 적용 */
+      width: 150px;                   /* 원하는 너비 (input 길이) */
     }
 
-    /* label, span 스타일은 그대로 두시면 됩니다 */
-    .form-group label {
-      width: 120px;
-    }
-
-    /* input 스타일은 "border-bottom"만 유지 */
+    /* (B) input : 테두리는 완전히 제거 */
     .input-wrap input {
       border: none;
       border-radius: 0;
       background-color: transparent;
-      border-bottom: 2px solid #ccc;  /* 기본 회색 밑줄 */
-      width: 100%;                    /* 래퍼와 같은 폭으로 */
+      width: 100%;                    /* 래퍼와 동일 너비 */
       padding: 5px;
       text-align: right;
       font-size: 16px;
       outline: none;
     }
 
-    /* 파란 밑줄은 .input-wrap::after 로 만든다 */
+    /* (C) 파란 밑줄 (처음엔 폭=0) */
     .input-wrap::after {
       content: "";
       position: absolute;
       left: 50%;
       bottom: 0;
-      width: 0;                        /* 처음엔 0 */
+      width: 0;
       height: 2px;
-      background-color: #2196F3;       /* 파란색 */
-      transform: translateX(-50%);     
-      transition: width 0.4s ease;     /* 중앙에서 좌우로 퍼지는 애니메이션 */
+      background-color: #2196F3;
+      transform: translateX(-50%);
+      transition: width 0.4s ease;  /* 중앙에서 좌우로 퍼지는 애니메이션 */
     }
 
-    /* 포커스되면(.input-wrap 내부에 focus가 생기면) 폭이 100%로 */
+    /* (D) focus-within → input 클릭 시, 폭=100%로 확장 */
     .input-wrap:focus-within::after {
       width: 100%;
+    }
+
+    /* 라벨, 스팬, 힌트 등은 기존대로 유지 */
+    .form-group label {
+      width: 120px;
     }
     .form-group span {
       margin-left: 5px;
