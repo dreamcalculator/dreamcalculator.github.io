@@ -52,24 +52,38 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       width: 120px; /* 모든 라벨 폭을 동일하게 */
     }
     .form-group input {
-        /* 기존 속성 중 박스 형태를 만드는 border나 background 제거 */
+      position: relative;       /* 가상 요소의 위치 기준을 위해 position: relative 필요 */
       border: none;
       border-radius: 0;
       background-color: transparent;
 
-      /* 밑줄만 보이도록 설정 */
-      border-bottom: 2px solid #ccc; /* 초기 상태: 흐린 회색 밑줄 */
+      /* 옅은 회색 밑줄 */
+      border-bottom: 2px solid #ccc;
 
-      /* 부드러운 전환 효과 */
-      transition: border-color 0.3s ease;
-
-      /* 아래는 기존 코드 중 필요한 것만 유지(예시) */
-      width: 100%;
-      max-width: 150px;
+      width: 150px;
       padding: 5px;
       text-align: right;
       font-size: 16px;
-      outline: none; /* 포커스 시 파란 테두리 제거 */
+      outline: none;
+    }
+    .form-group input::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background-color: #2196F3;  /* 파란색 */
+      transform: translateX(-50%);
+      transition: width 0.4s ease; /* 폭이 0→100%로 부드럽게 변환 */
+    }
+
+    /*
+      마우스를 올려놓으면(:hover) 폭이 100%가 되어
+      가운데에서 좌우로 퍼져 나가는 효과가 나타난다
+    */
+    .form-group input:hover::after {
+      width: 100%;
     }
     .form-group input:focus {
      border-bottom-color: #2196F3; /* 원하는 색상으로 변경 가능 */
