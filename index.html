@@ -77,13 +77,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       transform: translateX(-50%);
       transition: width 0.4s ease; /* 폭이 0→100%로 부드럽게 변환 */
     }
-
-    /*
-      마우스를 올려놓으면(:hover) 폭이 100%가 되어
-      가운데에서 좌우로 퍼져 나가는 효과가 나타난다
-    */
-    .form-group:hover input::after,
-    .form-group:focus-within input::after {
+    .form-group input:hover::after,
+    .form-group input:focus::after {
       width: 100%;
     }
 
